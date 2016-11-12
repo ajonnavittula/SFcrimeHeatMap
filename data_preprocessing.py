@@ -1,8 +1,11 @@
 import csv     # imports the csv module
-import sys      # imports the sys module
+#import sys      # imports the sys module
 import numpy as np
-from sklearn.decomposition import PCA
+from sklearn.decomposition import PCA, FastICA
+#from sklearn import svm
+from sklearn.cluster import KMeans
 #from sklearn import datasets
+#from sklearn.neural_network import MLPClassifier
 
 f = open("SF_Processed.csv", "rb") # opens the csv file
 i = 0
@@ -52,3 +55,19 @@ pca = PCA(n_components=4)
 pca.fit(temp[:,0:4])
 pca_score = pca.explained_variance_ratio_
 V = pca.components_
+
+ica = FastICA(n_components=3)
+S_ = ica.fit_transform(X_train)  # Reconstruct signals
+A_ = ica.mixing_  # Get estimated mixing matrix
+
+X_train = pca.transform(X_train)
+kmeans = KMeans(n_clusters=5, random_state=0).fit(S_)
+##clf = svm.SVC()
+##clf.fit(X_test, y_test)
+S_test = ica.fit_transform(X_test)
+Y_out = kmeans.predict(S_test)
+#errors = Y_out - y_test
+#indices = np.nonzero(errors)
+#clf = MLPClassifier(solver='lbfgs', alpha=1e-5,hidden_layer_sizes=(5, 2), random_state=1)
+#clf.fit(X_train, y_train) 
+
