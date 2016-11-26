@@ -56,8 +56,10 @@ Xts = pca.fit_transform(X_test)  # Reconstruct signals based on orthogonal compo
 
 #clf2 = GradientBoostingClassifier(n_estimators=100, learning_rate=0.1,max_depth=1, random_state=0) Train Accuracy = 0.921114 Test Accuracy = 0.878907 
 #clf2 = GradientBoostingClassifier(n_estimators=300, learning_rate=0.05,max_depth=3, random_state=0) Train Accuracy = 0.983857 Test Accuracy = 0.879990 
-clf2 = GradientBoostingClassifier(n_estimators=400, learning_rate=0.02,max_depth=3, random_state=0) #Train Accuracy = 0.978574 Test Accuracy = 0.882669
-#clf2.fit(X_train, y_train)	
+#clf2 = GradientBoostingClassifier(n_estimators=400, learning_rate=0.02,max_depth=3, random_state=0) #Train Accuracy = 0.978574 Test Accuracy = 0.882669
+
+clf2 = GradientBoostingClassifier(n_estimators=800, learning_rate=0.4,max_depth=3, random_state=0) #Train Accuracy = 0.979995 Test Accuracy = 0.877224 
+
 clf2.fit(Xtr, y_train)
 accut=clf2.score(Xts,y_test)
 accutr=clf2.score(Xtr,y_train)
