@@ -4,6 +4,7 @@ import pandas as pd
 #import pyexcel as pe
 from sklearn import preprocessing
 from sklearn.decomposition import PCA
+from sklearn.model_selection import train_test_split
 from sklearn import svm
 #from sklearn.neural_network import MLPClassifier
 #from sklearn.model_selection import StratifiedKFold
@@ -11,7 +12,7 @@ from sklearn import tree
 data=pd.read_csv("SF_ProcessedEightFeatures.csv",engine='python',delimiter=',', header=0)
 #print("Total rows: {0}".format(len(data)))
 d=data.as_matrix(columns=None)
-
+from collections import defaultdict
 temp = np.asarray(d)
 #print temp.dtype
 np.random.shuffle(temp)
@@ -77,31 +78,31 @@ print predicion
 # X_train[:,2]=str(X_train[:,2])
 # X_train[:,3]=str(X_train[:,3])
 # print X_train
-X_train_n=temp2[0:1048575,0:8]
-y_train_n=temp2[0:1048575,8]
-X_train = temp2[0:629145,0:8]
-X_train = np.array(X_train).astype(np.float)
-#print X_train.dtype
-print ".........................."
-y_train = temp2[0:629145,8]
-y_train = np.array(y_train).astype(int)
-#print(y_train)
-#print y_train.dtype
-X_val = temp2[629145:838860,0:8]
-X_val = np.array(X_val).astype(np.float)
-
-y_val = temp2[629145:838860,8]
-y_val = np.array(y_val).astype(np.int)
-#print y_val.dtype
-X_test = temp2[838860:1048575,0:8]
-X_test = np.array(X_test).astype(np.float)
-
-y_test = temp2[838860:1048575,8]
-y_test = np.array(y_test).astype(np.float)
-y_test = np.array(y_test).astype(np.int)
-
-print y_train
-
+#X_train_n=temp2[0:1048575,0:8]
+#y_train_n=temp2[0:1048575,8]
+#X_train = temp2[0:629145,0:8]
+#X_train = np.array(X_train).astype(np.float)
+##print X_train.dtype
+#print ".........................."
+#y_train = temp2[0:629145,8]
+#y_train = np.array(y_train).astype(int)
+##print(y_train)
+##print y_train.dtype
+#X_val = temp2[629145:838860,0:8]
+#X_val = np.array(X_val).astype(np.float)
+#
+#y_val = temp2[629145:838860,8]
+#y_val = np.array(y_val).astype(np.int)
+##print y_val.dtype
+#X_test = temp2[838860:1048575,0:8]
+#X_test = np.array(X_test).astype(np.float)
+#
+#y_test = temp2[838860:1048575,8]
+#y_test = np.array(y_test).astype(np.float)
+#y_test = np.array(y_test).astype(np.int)
+#
+#print y_train
+X_train, X_test, y_train, y_test = train_test_split(temp2[:,:8],temp2[:,8],test_size=0.20,stratify=temp[:,8])
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(X_train, y_train)
 # s= clf.predict(X_test)
@@ -112,6 +113,11 @@ clf = clf.fit(X_train, y_train)
 # print non_zero
 # x=non_zero/float(len(y_test))
 # print x
+nvar = temp[:,0:5]
+D = defaultdict(list)
+for i,item in enumerate(nvar):
+    D[item].append(i)
+D = {k:v for k,v in D.items() if len(v)>1}
 y_train_pred = clf.predict(X_train)
 print "Training Complete..."
 print "Testing..."

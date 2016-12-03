@@ -43,7 +43,8 @@ from sklearn.decomposition import PCA
 
 import pandas as pd
 
-data=pd.read_csv("/Users/JK/Documents/artificial_intelligence/ai_project/SF_Processed.csv",engine='python',delimiter=',', header=0)
+# data=pd.read_csv("/Users/JK/Documents/artificial_intelligence/ai_project/SF_Processed.csv",engine='python',delimiter=',', header=0)
+data = pd.read_csv("SF_Processed.csv",engine='python',delimiter=',',header=0)
 d=data.as_matrix(columns=None)
 
 #X, y = make_gaussian_quantiles(n_samples=13000, n_features=10,
